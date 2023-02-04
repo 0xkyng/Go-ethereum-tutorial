@@ -1,21 +1,22 @@
 package main
 
-
 import (
-	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/common"
-	"log"
-	"fmt"
 	"context"
+	"fmt"
+	"log"
+	"math/big"
+
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 var (
-    ctx         = context.Background()
-    url         = "https://mainnet.infura.io/v3/407f60619ec14e538991ba8f9e0f4237"
-    client, err = ethclient.DialContext(ctx, url)
+	ctx         = context.Background()
+	url         = "https://mainnet.infura.io/v3/407f60619ec14e538991ba8f9e0f4237"
+	client, err = ethclient.DialContext(ctx, url)
 )
 
-func main()  {
+func main() {
 	// create eth client
 	client, err := ethclient.DialContext(ctx, url)
 
@@ -37,7 +38,7 @@ func main()  {
 
 	balance, err := client.BalanceAt(ctx, address, nil)
 	if err != nil {
-		log. Fatalf("Error to get the balance:%v", err)
+		log.Fatalf("Error to get the balance:%v", err)
 	}
 	fmt.Println("The balance:", balance)
 	// Covert the bigint to bigfloat
@@ -46,6 +47,4 @@ func main()  {
 	fBalance.SetString(balance.String())
 	fmt.Println(fBalance)
 
-	
-	
 }
