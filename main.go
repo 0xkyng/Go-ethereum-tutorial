@@ -3,6 +3,7 @@ package main
 
 import (
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/ethereum/go-ethereum/common"
 	"log"
 	"fmt"
 	"context"
@@ -28,7 +29,22 @@ func main()  {
 	if err != nil {
 		log.Fatalf("Error to get block:%v", err)
 	}
-	fmt.Println(block.Number())
+	fmt.Println("The block number:", block.Number())
+
+	// Check the balance of an ether wallet
+	addr := "0x2412784d09cd692Acc14142b2C8b0DEC022d52c2"
+	address := common.HexToAddress(addr)
+
+	balance, err := client.BalanceAt(ctx, address, nil)
+	if err != nil {
+		log. Fatalf("Error to get the balance:%v", err)
+	}
+	fmt.Println("The balance:", balance)
+	// Covert the bigint to bigfloat
+	// 1 ether = 10^18 wei
+	fBalance := new(big.Float)
+	fBalance.SetString(balance.String())
+	fmt.Println(fBalance)
 
 	
 	
