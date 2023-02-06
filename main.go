@@ -63,11 +63,17 @@ func main() {
 	// Encode the privateKeyData
 	fmt.Println(hexutil.Encode(pvKeyData))
 
-	// Generate a public key from the private key
+	// Create a public key from the private key
 	pubKeyData := crypto.FromECDSAPub(&pvKey.PublicKey)
 	fmt.Println(hexutil.Encode(pubKeyData))
 
-	// Generate public address from the public key
+	// Create public address from the public key
 	fmt.Println(crypto.PubkeyToAddress(pvKey.PublicKey).Hex())
+
+	// Generate a keystore wallet - Enccypted private key
+	// Kestore is an encrypted version of the ethereum private key using
+	// Symmetric encryption, this allows to add an other layer of security
+	// Even if another person gets access to the file, he cannot use it until
+	// He knows the password used to encrypt it
 
 }
