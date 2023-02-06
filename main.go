@@ -63,8 +63,11 @@ func main() {
 	// Encode the privateKeyData
 	fmt.Println(hexutil.Encode(pvKeyData))
 
-	// Generate a public key
+	// Generate a public key from the private key
 	pubKeyData := crypto.FromECDSAPub(&pvKey.PublicKey)
 	fmt.Println(hexutil.Encode(pubKeyData))
+
+	// Generate public address from the public key
+	fmt.Println(crypto.PubkeyToAddress(pvKey.PublicKey).Hex())
 
 }
