@@ -7,6 +7,8 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -46,5 +48,17 @@ func main() {
 	fBalance := new(big.Float)
 	fBalance.SetString(balance.String())
 	fmt.Println(fBalance)
+
+	// Generate wallet address
+	privateKey, err := crypto.GenerateKey()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Covert the private key to a string
+	privateKeyData := crypto.FromECDSA(privateKey)
+	// Encode the privateKeyData
+	fmt.Println(hexutil.Encode(privateKeyData))
 
 }
