@@ -50,15 +50,17 @@ func main() {
 	fmt.Println(fBalance)
 
 	// Generate wallet address
-	privateKey, err := crypto.GenerateKey()
+
+	// Generate a private key
+	pvKey, err := crypto.GenerateKey()
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Covert the private key to a string
-	privateKeyData := crypto.FromECDSA(privateKey)
+	pvKeyData := crypto.FromECDSA(pvKey)
 	// Encode the privateKeyData
-	fmt.Println(hexutil.Encode(privateKeyData))
+	fmt.Println(hexutil.Encode(pvKeyData))
 
 }
