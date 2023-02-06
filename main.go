@@ -3,13 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
 	"math/big"
-
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/crypto"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 var (
@@ -48,32 +45,4 @@ func main() {
 	fBalance := new(big.Float)
 	fBalance.SetString(balance.String())
 	fmt.Println(fBalance)
-
-	// Generate wallet address
-
-	// Generate a private key
-	pvKey, err := crypto.GenerateKey()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Covert the private key to a string
-	pvKeyData := crypto.FromECDSA(pvKey)
-	// Encode the privateKeyData
-	fmt.Println(hexutil.Encode(pvKeyData))
-
-	// Create a public key from the private key
-	pubKeyData := crypto.FromECDSAPub(&pvKey.PublicKey)
-	fmt.Println(hexutil.Encode(pubKeyData))
-
-	// Create public address from the public key
-	fmt.Println(crypto.PubkeyToAddress(pvKey.PublicKey).Hex())
-
-	// Generate a keystore wallet - Enccypted private key
-	// Kestore is an encrypted version of the ethereum private key using
-	// Symmetric encryption, this allows to add an other layer of security
-	// Even if another person gets access to the file, he cannot use it until
-	// He knows the password used to encrypt it
-
 }
