@@ -27,7 +27,7 @@ func main() {
 
 	// Decrypt the file and get the private key
 
-	file, err := ioutil.ReadFile("/wallet/UTC--2023-02-06T19-31-00.372104270Z--ad272b84ce085aba470b1b1f46c8f30e31ec80d5")
+	file, err := ioutil.ReadFile("./wallet/UTC--2023-02-06T19-31-00.372104270Z--ad272b84ce085aba470b1b1f46c8f30e31ec80d5")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,6 +38,6 @@ func main() {
 	}
 
 	pData := crypto.FromECDSA(key.PrivateKey)
-	hexutil.Encode(pData)
+	fmt.Println(hexutil.Encode(pData))
 
 }
