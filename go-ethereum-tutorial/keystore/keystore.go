@@ -40,4 +40,8 @@ func main() {
 	pData := crypto.FromECDSA(key.PrivateKey)
 	fmt.Println(hexutil.Encode(pData))
 
+	// Get the public key
+	pData = crypto.FromECDSAPub(&key.PrivateKey.PublicKey)
+	fmt.Println(hexutil.Encode(pData))
+
 }
