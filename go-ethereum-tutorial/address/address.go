@@ -19,3 +19,14 @@ client, err := ethclient.Dial("https://mainnet.infura.io/v3/407f60619ec14e538991
 if err != nil {
 	log.Fatal(err)
 }
+
+ // 0x Protocol Token (ZRX) smart contract address
+ address := common.HexToAddress("0xe41d2489571d322189246dafa5ebde1f4699f498")
+ bytecode, err := client.CodeAt(context.Background(), address, nil) // nil is latest block
+ if err != nil {
+	 log.Fatal(err)
+ }
+
+ isContract := len(bytecode) > 0
+
+ fmt.Printf("is contract: %v\n", isContract) // is contract: true
