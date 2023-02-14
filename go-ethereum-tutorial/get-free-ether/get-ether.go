@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/ethereum/go-ethereum/accounts/keystore"
@@ -37,9 +38,17 @@ func main() {
 	account1 := common.HexToAddress("f3e80494e6e77f2d19e7f76abac8912abf153a5d")
 	account2 := common.HexToAddress("00397e3b5f78291709b945d792ad959f49667c0c")
 
-	account1Balance := client.BalanceAt(context.Background(), account1, nil)
+	account1Balance, err := client.BalanceAt(context.Background(), account1, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	account2Balance, err := client.BalanceAt(context.Background(), account2, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("The balance for account1 is", account1Balance)
+	fmt.Println("The balance for account2 is", account2Balance)
 
 }
