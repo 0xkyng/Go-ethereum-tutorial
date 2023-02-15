@@ -86,7 +86,7 @@ func main() {
 	}
 
 	// Decrypt wallet address
-	key, err := keystore.DecryptKey(b, "password")
+	key, err := keystore.DecryptKey(b, "secret")
 	if err != nil {
 		log.Fatal(err)
 	}
