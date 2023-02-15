@@ -8,9 +8,11 @@ import (
 	"math/big"
 
 	// "github.com/ethereum/go-ethereum/accounts/keystore"
+	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/eth/gasprice"
+
+	// "github.com/ethereum/go-ethereum/eth/gasprice"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -70,7 +72,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	b, err := ioutil.ReadFile()
-	types.SignTx(tx, types.NewEIP155Signer(chainID))
+	b, err := ioutil.ReadFile("wallet/UTC--2023-02-06T19-31-00.372104270Z--ad272b84ce085aba470b1b1f46c8f30e31ec80d5")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Decrypt wallet address
+	key, err := keystore.DecryptKey(b, "password")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), key.PrivateKey)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
