@@ -58,15 +58,23 @@ func main() {
 	fmt.Println("The balance for account2 is", account2Balance)
 
 	// Make a transction
+
+	// Get nonce from the blockchain
 	nonce, err := client.PendingNonceAt(context.Background(), account1)
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	amount := big.NewInt(1000000000000000)
+
+	// SuggestGasPrice retrieves the currently suggested gas price
+	// To allow a timely execution of a transaction.
 	gasprice, err := client.SuggestGasPrice(context.Background())
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Create transaction
 	tx := types.NewTransaction(nonce, account2, amount, 2100, gasprice, nil)
 	chainID, err := client.NetworkID(context.Background())
 	if err != nil {
@@ -82,9 +90,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	tx, err := types.SignTx(tx, types.NewEIP155Signer(chainID), key.PrivateKey)
+
+	// Sign transaction
+	tx, err = types.SignTx(tx, types.NewEIP155Signer(chainID), key.PrivateKey)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	err = client.SendTransaction(context.Background(), tx)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print transaction hash
+	fmt.Printf("transaction sent: %s", tx.Hash().Hex())
 
 }
