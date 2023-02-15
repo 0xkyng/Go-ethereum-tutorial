@@ -3,10 +3,14 @@ package main
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"math/big"
 
 	// "github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/eth/gasprice"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -50,5 +54,23 @@ func main() {
 
 	fmt.Println("The balance for account1 is", account1Balance)
 	fmt.Println("The balance for account2 is", account2Balance)
+
+	// Make a transction
+	nonce, err := client.PendingNonceAt(context.Background(), account1)
+	if err != nil {
+		log.Fatal(err)
+	}
+	amount := big.NewInt(1000000000000000)
+	gasprice, err := client.SuggestGasPrice(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	tx := types.NewTransaction(nonce, account2, amount, 2100, gasprice, nil)
+	chainID, err := client.NetworkID(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	b, err := ioutil.ReadFile()
+	types.SignTx(tx, types.NewEIP155Signer(chainID))
 
 }
